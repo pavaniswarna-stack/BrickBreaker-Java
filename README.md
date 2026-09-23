@@ -1,40 +1,81 @@
-# 🎮 Brick Breaker Game
+🧱 Brick Breaker Game in Java
 
-A simple 2D Brick Breaker game developed using **Java Swing**. The player controls a paddle to bounce the ball and break all the bricks while earning points and managing limited lives.
+A feature-rich Brick Breaker game developed using Java and Java Swing. This project demonstrates Object-Oriented Programming, event handling, collision detection, game loops, collections, and file handling through an interactive arcade-style game.
 
-## 📌 Project Overview
+🎮 About the Game
 
-The Brick Breaker game is a desktop-based Java application that demonstrates important concepts of **Object-Oriented Programming (OOP)**, GUI development, keyboard event handling, game loops, and collision detection.
+Brick Breaker is a classic arcade game where the player controls a paddle to bounce a ball and destroy bricks.
 
-The objective of the game is to destroy all the bricks using the bouncing ball without losing all available lives.
+The game includes 3 levels, multiple brick types, power-ups, lives, scoring, increasing difficulty, pause/resume functionality, and high-score storage.
 
-## ✨ Features
+The objective is to destroy all breakable bricks while keeping the ball from falling below the paddle.
 
-- 🎮 Paddle movement using keyboard
-- ⚽ Automatic ball movement
-- 🧱 Multiple rows and columns of bricks
-- 💥 Ball and brick collision detection
-- 🏓 Ball and paddle collision detection
-- 🧱 Wall collision detection
-- ⭐ Score system
-- ❤️ Three lives
-- 🏆 Winning condition
-- 💀 Game Over condition
-- 🔄 Restart functionality
-- 🖥️ Java Swing graphical interface
+✨ Features
+🎮 Interactive keyboard controls
+🏓 Paddle movement
+⚪ Ball movement and collision detection
+🧱 Multiple brick types
+⚡ Random power-ups
+❤️ Multiple lives
+🏆 Score and high-score system
+📈 Increasing ball speed
+🎯 3 levels with increasing difficulty
+⏸️ Pause and resume
+🔄 Restart functionality
+🏁 Game Over screen
+🎉 Win screen
+💾 High-score persistence using file handling
+🧱 Brick Types
+Brick	Points	Description
+Normal	10	Destroyed with one hit
+Strong	20	Requires two hits
+Bonus	30	Higher score and chance of power-up
+Unbreakable	0	Cannot be destroyed
+⚡ Power-Ups
 
-## 🛠️ Technologies Used
+Power-ups randomly appear when certain bricks are destroyed.
 
-- **Java**
-- **Java Swing**
-- **AWT Graphics**
-- **Object-Oriented Programming**
-- **Event Handling**
-- **Collision Detection**
+Power-Up	Effect
+Big Paddle	Increases paddle size
+Extra Life	Adds one life
+Slow Ball	Reduces ball speed
+Multi Ball	Creates an additional ball
+🎯 Levels
+Level 1
+Basic brick layout
+Normal and bonus bricks
+Standard ball speed
+Level 2
+Strong bricks introduced
+Increased ball speed
+Higher difficulty
+Level 3
+Unbreakable bricks introduced
+Higher ball speed
+More challenging gameplay
 
-## 📂 Project Structure
+A level is completed when all breakable bricks are destroyed.
 
-```text
+🎮 Controls
+Key	Action
+ENTER	Start game
+LEFT ARROW	Move paddle left
+RIGHT ARROW	Move paddle right
+P	Pause / Resume
+ENTER	Next level
+ENTER	Restart after Game Over
+ENTER	Play again after winning
+🛠️ Technologies Used
+Java 17
+Java Swing
+AWT
+Object-Oriented Programming
+ArrayList
+File Handling
+Keyboard Event Handling
+Collision Detection
+Timer-based Game Loop
+📂 Project Structure
 BrickBreaker/
 │
 ├── Main.java
@@ -43,12 +84,14 @@ BrickBreaker/
 ├── Ball.java
 ├── Paddle.java
 ├── Brick.java
+├── PowerUp.java
+├── ScoreManager.java
 ├── .gitignore
 └── README.md
-🧩 Class Description
+🧩 Class Responsibilities
 Main.java
 
-Entry point of the application. Starts the Brick Breaker game.
+The entry point of the application.
 
 GameFrame.java
 
@@ -56,137 +99,195 @@ Creates and configures the main game window using JFrame.
 
 GamePanel.java
 
-Contains the main game logic, including:
+The main game controller responsible for:
 
 Game loop
+Rendering
 Keyboard input
+Ball movement
+Paddle movement
 Collision detection
+Brick management
+Power-ups
+Levels
 Score
 Lives
-Game Over
-Winning condition
+Game states
 Ball.java
 
-Controls the ball's:
+Handles:
 
-Position
+Ball position
 Movement
+Speed
 Direction
-Collision behavior
-Reset functionality
+Collision boundaries
 Paddle.java
 
-Controls the player's paddle and its left/right movement.
+Handles:
 
+Paddle movement
+Paddle size
+Paddle collision
+Paddle rendering
 Brick.java
 
-Represents individual bricks and manages their destroyed state.
+Represents the different types of bricks and manages their health, collision, and score values.
 
-🎮 Controls
-Key	Action
-←	Move paddle left
-→	Move paddle right
-ENTER	Restart after Game Over or Win
-⚙️ Requirements
+PowerUp.java
 
-Before running the project, make sure you have:
+Manages falling power-ups and their effects.
 
-Java Development Kit (JDK) installed
-Java version 17 or later
-VS Code, IntelliJ IDEA, or Eclipse
+ScoreManager.java
 
-Check your Java installation:
+Loads and saves the player's high score using a local file.
+
+🏗️ OOP Concepts Demonstrated
+
+This project applies several important Java concepts.
+
+Encapsulation
+
+Game properties are stored as private variables and accessed through methods.
+
+private double x;
+private double y;
+Classes and Objects
+
+The game consists of objects such as:
+
+Ball
+Paddle
+Brick
+PowerUp
+Enums
+
+Enums are used for brick types, power-up types, and game states.
+
+NORMAL
+STRONG
+BONUS
+UNBREAKABLE
+Collections
+
+ArrayList is used to manage multiple game objects.
+
+ArrayList<Ball> balls;
+ArrayList<Brick> bricks;
+ArrayList<PowerUp> powerUps;
+File Handling
+
+The high score is stored locally and loaded when the game starts.
+
+🔄 Game Flow
+              START
+                |
+                v
+           Main Menu
+                |
+         Press ENTER
+                |
+                v
+             Level 1
+                |
+                v
+          Play the Game
+                |
+       +--------+--------+
+       |                 |
+       v                 v
+   Lose Ball        Destroy Bricks
+       |                 |
+       v                 v
+   Lose Life        Level Complete
+       |                 |
+       |                 v
+       |              Level 2
+       |                 |
+       |                 v
+       |              Level 3
+       |                 |
+       |                 v
+       |              YOU WIN
+       |
+       v
+  Lives = 0
+       |
+       v
+   GAME OVER
+▶️ How to Run
+Prerequisites
+
+Install Java Development Kit (JDK 17 or later).
+
+Check Java:
 
 java -version
+
+Check the compiler:
+
 javac -version
-▶️ How to Run
-1. Clone the repository
+Clone the Repository
 git clone https://github.com/pavaniswarna-stack/BrickBreaker-Java.git
-2. Open the project
 
-Open the BrickBreaker folder in VS Code or another Java IDE.
+Navigate into the project:
 
-3. Compile the project
+cd BrickBreaker-Java
+Compile
+javac *.java
+Run
+java Main
+🧹 Clean Build
 
-Open the terminal inside the project folder and run:
+Compiled .class files are excluded from GitHub using .gitignore.
+
+*.class
+.vscode/
+highscore.txt
+
+To remove existing compiled files on Windows:
+
+del *.class
+
+Then compile again:
 
 javac *.java
-4. Run the game
-java Main
+📈 Learning Outcomes
 
-The Brick Breaker game window will open.
+Through this project, the following concepts are practiced:
 
-🧠 Java Concepts Demonstrated
+Java Object-Oriented Programming
+GUI development using Swing
+Event-driven programming
+Keyboard event handling
+Game loops
+Collision detection
+Collections
+Enums
+File handling
+State management
+Problem solving
+Modular class design
+🚀 Future Enhancements
 
-This project demonstrates:
+Possible future improvements include:
 
-Classes and Objects
-Encapsulation
-Constructors
-Methods
-ArrayList
-Inheritance concepts
-Event Handling
-JFrame
-JPanel
-Graphics
-Graphics2D
-Timer
-Keyboard Events
-Collision Detection
-🎯 Game Logic
-
-The game continuously performs the following operations:
-
-Start Game
-    ↓
-Move Paddle
-    ↓
-Move Ball
-    ↓
-Check Wall Collision
-    ↓
-Check Paddle Collision
-    ↓
-Check Brick Collision
-    ↓
-Update Score
-    ↓
-Check Lives
-    ↓
-Check Remaining Bricks
-    ↓
-Win / Game Over
-🔮 Future Enhancements
-
-The project can be further improved by adding:
-
-Multiple game levels
-Different brick types
-Power-ups
-Increasing ball speed
-Sound effects
-Background music
-High-score system
-Difficulty levels
-Start menu
-Pause and resume functionality
-Database-based score storage
-Improved graphics and animations
+🔊 Sound effects and background music
+🎨 Advanced graphics and animations
+✨ Particle effects
+🏅 More game levels
+🎯 Difficulty selection
+🛡️ Additional power-ups
+🎮 Mouse and gamepad controls
+📊 Detailed game statistics
+🥇 Online leaderboard
+💾 Complete game progress saving
 👩‍💻 Author
 
 Pavani Thulasi Swarna
 
-B.Tech – Computer Science and Engineering
+B.Tech – Computer Science & Engineering
 
-📄 License
+📜 License
 
-This project is created for educational and academic purposes.
-
-
-### One important change
-
-Since your actual repository URL is being used in the README, if your repository name or GitHub username is different, change this line:
-
-```bash
-git clone https://github.com/pavaniswarna-stack/BrickBreaker-Java.git
+This project was developed for educational and academic purposes.
