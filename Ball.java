@@ -4,16 +4,24 @@ import java.awt.Rectangle;
 
 public class Ball {
 
-    private int x;
-    private int y;
-    private int diameter = 20;
+    private double x;
+    private double y;
 
-    private int dx = 3;
-    private int dy = -3;
+    private double dx;
+    private double dy;
 
-    public Ball(int x, int y) {
+    private final int diameter = 18;
+
+    private double speed;
+
+    public Ball(double x, double y, double speed) {
         this.x = x;
         this.y = y;
+
+        this.speed = speed;
+
+        dx = speed;
+        dy = -speed;
     }
 
     public void move() {
@@ -23,11 +31,16 @@ public class Ball {
 
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillOval(x, y, diameter, diameter);
+        g.fillOval((int) x, (int) y, diameter, diameter);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, diameter, diameter);
+        return new Rectangle(
+                (int) x,
+                (int) y,
+                diameter,
+                diameter
+        );
     }
 
     public void reverseX() {
@@ -38,22 +51,69 @@ public class Ball {
         dy = -dy;
     }
 
-    public void reset(int x, int y) {
-        this.x = x;
-        this.y = y;
-        dx = 3;
-        dy = -3;
+    public void setDirection(double dx, double dy) {
+
+        double length = Math.sqrt(dx * dx + dy * dy);
+
+        if (length == 0) {
+            return;
+        }
+
+        this.dx = (dx / length) * speed;
+        this.dy = (dy / length) * speed;
     }
 
-    public int getX() {
-        return x;
+    public void setSpeed(double speed) {
+
+        double length = Math.sqrt(dx * dx + dy * dy);
+
+        if (length == 0) {
+            this.speed = speed;
+            return;
+        }
+
+        this.speed = speed;
+
+        dx = (dx / length) * speed;
+        dy = (dy / length) * speed;
     }
 
-    public int getY() {
-        return y;
+    public void increaseSpeed(double amount) {
+        setSpeed(speed + amount);
+    }
+
+    public double getDx() {
+        return dx;
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public int getDiameter() {
         return diameter;
+    }
+
+    public int getX() {
+        return (int) x;
+    }
+
+    public int getY() {
+        return (int) y;
+    }
+
+    public void reset(double x, double y, double speed) {
+
+        this.x = x;
+        this.y = y;
+
+        this.speed = speed;
+
+        dx = speed;
+        dy = -speed;
     }
 }

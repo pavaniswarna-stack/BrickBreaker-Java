@@ -5,15 +5,16 @@ import java.awt.Rectangle;
 public class Paddle {
 
     private int x;
-    private final int y = 520;
+    private int y;
 
-    private final int width = 120;
+    private int width = 120;
     private final int height = 15;
 
-    private int speed = 6;
+    private final int speed = 7;
 
-    public Paddle(int x) {
+    public Paddle(int x, int y) {
         this.x = x;
+        this.y = y;
     }
 
     public void moveLeft() {
@@ -25,6 +26,7 @@ public class Paddle {
     }
 
     public void moveRight(int panelWidth) {
+
         x += speed;
 
         if (x + width > panelWidth) {
@@ -32,9 +34,18 @@ public class Paddle {
         }
     }
 
+    public void increaseSize() {
+        width = Math.min(width + 30, 200);
+    }
+
+    public void resetSize() {
+        width = 120;
+    }
+
     public void draw(Graphics g) {
+
         g.setColor(Color.WHITE);
-        g.fillRect(x, y, width, height);
+        g.fillRoundRect(x, y, width, height, 10, 10);
     }
 
     public Rectangle getBounds() {
@@ -47,5 +58,9 @@ public class Paddle {
 
     public int getWidth() {
         return width;
+    }
+
+    public int getY() {
+        return y;
     }
 }
